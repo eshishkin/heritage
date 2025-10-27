@@ -552,7 +552,8 @@ function indiDetails(idx)
 		var name_full = name.full;
 		if (name.date != '') name_full += ' (' + name.date + ')';
 		if (name.cita.length > 0) name_full += citaLinks(name.cita);
-		txt += '<tr><td class="dwr-attr-title">' + name.type + '</td><td colspan="2" class="dwr-attr-value">' + name_full + '</td></tr>';
+		let url = `<a href="https://heritage.eashishkin.ru/web-tree/#/view?view=donatso&i=h&indi=${idx}">${name_full}</>`
+		txt += '<tr><td class="dwr-attr-title">' + name.type + '</td><td colspan="2" class="dwr-attr-value">' + url + '</td></tr>';
 		if (name.nick != '') txt += '<tr><td class="empty"></td><td class="dwr-attr-title">' + _('Nick Name') + '</td><td class="dwr-attr-value">' + name.nick + '</td></tr>';
 		if (name.call != '') txt += '<tr><td class="empty"></td><td class="dwr-attr-title">' + _('Call Name') + '</td><td class="dwr-attr-value">' + name.call + '</td></tr>';
 		if (name.fam_nick != '') txt += '<tr><td class="empty"></td><td class="dwr-attr-title">' + _('Family Nick Name') + '</td><td class="dwr-attr-value">' + name.fam_nick + '</td></tr>';
