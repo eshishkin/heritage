@@ -626,7 +626,7 @@ function eventTable(events, idx, fdx)
 		txt += '<tr>';
 		txt += '<td class="dwr-attr-title">' + e.type + citaLinks(e.cita) + '</td>';
 		txt += '<td class="dwr-attr-value">' + e.date + '</td>';
-		txt += '<td class="dwr-attr-value">' + placeLink(e.place, idx, fdx, e) + '</td>';
+		txt += '<td class="dwr-attr-value">' + historicPlaceLink(e.place, idx, fdx, e) + '</td>';
 		var notes = [];
 		if (e.descr != '') notes.push('<span class="dwr-attr-header">' + _('Description') + '</span>:<br>' + e.descr);
 		if (e.text != '') notes.push('<span class="dwr-attr-header">' + _('Notes') + '</span>:<br>' + notePara(e.text, '<p>'));
@@ -943,6 +943,47 @@ var PP_IDX = 1;
 var PP_FDX = 2;
 var PP_EVENT = 3;
 
+
+function historicPlaceLink(pdx, idx, fdx, event)
+{
+	if (typeof(idx) === 'undefined') idx = -1;
+	if (typeof(fdx) === 'undefined') fdx = -1;
+	if (typeof(event) === 'undefined') event = null;
+	if (pdx == -1) return('');
+
+	let eventDate = event.date_sdn;
+
+	let placeFullName = '';
+	let places = [pdx];
+	while (places.length > 0) {
+		let placeId = places.pop();
+		let placeNames = P(placeId, 'names');
+		let historicPlaceName = placeNames[0].name;
+
+		for (let j = placeNames.length - 2; j > 0; j--) {
+			if (placeNames[j].date_sdn > eventDate) {
+				historicPlaceName = placeNames[j + 1].name;
+				break;
+			}
+		}
+
+		let enclosedByPlaces = P(placeId, 'enclosed_by');
+		placeFullName += historicPlaceName
+
+		for (let j = 0; j < enclosedByPlaces.length; j++) {
+			if (enclosedByPlaces[j].date_sdn < eventDate) {
+				places.push(enclosedByPlaces[j].pdx)
+				break;
+			}
+		}
+
+		if (places.length > 0) {
+			placeFullName += ", "
+		}
+	}
+
+	return('<a href="' + placeHref(pdx) + '">' + placeFullName + '</a>');
+}
 
 function placeLink(pdx, idx, fdx, event)
 {
