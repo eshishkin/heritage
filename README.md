@@ -6,4 +6,7 @@
 - Go to `patch` folder and apply custom patch to DWR report using `bash patch.sh`
 - Compress image files in dwr directory using `bash compress.sh` (optional)
 - Build topola-tree `VITE_STATIC_URL=https://raw.githubusercontent.com/eshishkin/heritage/refs/heads/master/gedcom/heritage.ged npm run build`
+  - Go to topola-viewer repository
+  - `npm install` (comment `cypress` if needed)
+  - `VITE_GOOGLE_ANALYTICS=false VITE_STATIC_URL=https://raw.githubusercontent.com/eshishkin/heritage/refs/heads/master/gedcom/heritage.ged npm run build`
 - Copy generated topola-tree to `web-tree` folder
